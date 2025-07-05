@@ -1,0 +1,10 @@
+[package]
+name = "beautify"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+regex = "1"
+colored = "2"
+convert_case = "0.4"
