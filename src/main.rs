@@ -2,6 +2,8 @@ use clap::Parser;
 use clap::{ ArgAction };
 use regex::Regex;
 use std::io::{ self, BufRead };
+
+use crate::helpers::transpose;
 mod helpers;
 mod constants;
 
@@ -12,6 +14,10 @@ struct Args {
     /// Maximum width of each column
     #[arg(long, default_value_t = 50)]
     max_width: usize,
+
+    /// Transpose the table (flip rows and columns)
+    #[arg(long, action = ArgAction::SetTrue)]
+    transpose: bool,
 
     /// Regex separator between columns
     #[arg(long, default_value = r"\s{2,}")]
@@ -42,6 +48,11 @@ fn main() {
         .collect();
     if rows.is_empty() {
         return;
+    }
+
+    let mut rows = rows; // make it mutable
+    if args.transpose {
+        rows = transpose(&rows);
     }
 
     let selected_cols: Vec<usize> = args.cols

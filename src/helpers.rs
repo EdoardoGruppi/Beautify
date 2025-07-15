@@ -63,3 +63,17 @@ pub fn compute_column_widths(
         })
         .collect()
 }
+
+pub fn transpose(rows: &[Vec<String>]) -> Vec<Vec<String>> {
+    if rows.is_empty() {
+        return vec![];
+    }
+    let max_cols = rows.iter().map(|row| row.len()).max().unwrap_or(0);
+    let mut transposed = vec![vec![String::new(); rows.len()]; max_cols];
+    for (i, row) in rows.iter().enumerate() {
+        for (j, val) in row.iter().enumerate() {
+            transposed[j][i] = val.clone();
+        }
+    }
+    transposed
+}
